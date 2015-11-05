@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "index/index.html" %}
+{% block content %}
+{% load staticfiles %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+	var email ="";
+	var name = "";
+	$(document).ready(function(){
+		$("#com_add").submit(function(e){		
+			email = "{{user.email}}";
+			if(email == ""){
+				$("#input01").val('');
+				$("#input01").focus();
+				alert("You should sign in first");
+				e.preventDefault();
+			}
+		});
+		
+		$("#del").click(function(e){
+			email = "{{user.email}}";
+			if(email == ""){
+				alert("You should sign in first");
+				e.preventDefault();
+			}
+		});
+	});
+		
+</script>
+
+<div class="top-spacer">&nbsp;</div>
+
+<div class="page-wrapper">
+
+<div class="container">
+<div class="span12">
+
+<div class="row-fluid page-header">
+  <div class="span6"><h2>Board</h2></div>
+</div>   
+	<table cellspacing="0" cellpadding="0" class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">{{bd.subject }}</th>
+				<th scope="col">Name : {{bd.user_name }}</th>
+				<th scope="col">Hits : {{bd.hits }}</th>
+				<th scope="col">Register date : {{bd.reg_date }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="4">
+					{{bd.contents }}
+				</th>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="4"><a href="{% url 'board:lists' %}" class="btn btn-primary">List</a><a href="{% url 'board:update' bd.board_id %}?id={{bd.user_id}}" class="btn btn-warning">Edit</a><a href="{% url 'board:delete' bd.board_id %}?id={{bd.user_id}}" class="btn btn-danger">Delete</a></th><!---->
+
+			</tr>
+		</tfoot>
+	</table>
+	<form class = "form-horizontal" method="post" action="{% url 'board:view' bd.board_id %}" name="com_add" id="com_add">
+	{% csrf_token %}
+		<fieldset>
+			<div class="control-group">
+				<label class="control-label" for="input01">Comment</label>
+				<div class="controls">
+					<textarea class="input-xlarge" id="input01" name="comment_contents" rows="3"></textarea>
+					<button type="submit" class="btn btn-primary" id="write_btn">Write</button>
+					<p class="help-block"></p>
+				</div>
+			</div>
+		</fieldset>
+
+	</form>
+	{% if lists != NULL %}
+ 	<div id="comment_area">
+		<table cellspacing="0" cellpadding="0" class="table table-striped" id="comment_table">
+			
+			
+			{% for li in lists %}
+				<tr id="row_num_{{li.board_id }}">
+					<th scope="row">
+						{{li.user_name }}
+					</th>
+					<td>{{li.contents }}</td>
+					<td>{{li.reg_date }}</td>
+					<td><a href="{% url 'board:delComment' li.board_id %}?id={{bd.board_id}}" id="del"><i class="icon-trash"></i>DELETE</a></td>	
+				</tr>
+			{% endfor %}		
+		</table>
+	</div>
+	{% endif %}
+</div>
+</div>
+{% endblock content %}

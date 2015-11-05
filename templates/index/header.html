@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<header>  
+<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar-inner">
+<div class="container">
+	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	</a>
+	<a href="{% url 'main' %}" class="brand" style="margin-top:18px;margin-bottom:18px;font-size:34px;font-color:0xFFFFF;"> Cbajs91 </a>
+	<div class="nav-collapse collapse pull-right" id="main-menu">
+  		<ul class="nav">
+  		<li class="dropdown ">
+			{% if user.email != NULL %}
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.last_name}}<b class="caret"></b></a>
+						{% if user.email != 'a@p.com' %}
+							<ul class="dropdown-menu">
+								<li ><a href="{% url 'users:edit' %}">Edit Information</a></li>
+								<li ><a href="{% url 'users:delete' %}">Delete Account</a></li>
+								<li ><a href="{% url 'users:logout' %}">Sign Out</a></li>
+							</ul>
+						{% else %}
+							<ul class="dropdown-menu">
+								<!-- <li ><a href='index.jsp?content=userinfo.jsp'>My Information</a></li> -->
+								<li><a href="{% url 'users:show' %}">User List</a></li>
+								<li ><a href="{% url 'users:logout' %}">Sign Out</a></li>
+							</ul>
+						{% endif %}
+	
+			{% else %}
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Introduction <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li ><a href="{% url 'main' %}">Introduction</a></li>
+						<li ><a href="{% url 'users:login' %}">Sign In</a></li>
+						<li ><a href="{% url 'users:join' %}">Sign Up</a></li>
+					</ul>
+			{% endif %}
+		</li>	
+		
+		<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Board <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li ><a href="{% url 'board:lists' %}">Board</a></li>
+			</ul>
+		</li>
+		<!--<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">진행중인 작업<b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li ><a href='index.jsp?content=address.jsp'>주소록</a></li>
+				<li ><a href='index.jsp?content=guestbook.jsp'>방명록</a></li>
+				<li ><a href='index.jsp?content=download.jsp'>다운로드</a></li>
+			</ul>
+		</li>
+		<li class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">참고페이지 <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li ><a href='index.jsp?content=reference.jsp'>Responsive Design</a></li>
+				<li ><a href='index.jsp#anchor1'>Multi-site</a></li>
+				<li ><a href='index.jsp#anchor2'>Push Publishing</a></li>
+				<li ><a href='index.jsp#anchor3'>Highly Scalable</a></li>
+				<li ><a href='index.jsp#anchor4'>APIs & CMIS</a></li>
+				<li ><a href='index.jsp#anchor5'>Workflows</a></li>
+			</ul>
+		</li>-->
+		
+		</ul><!-- /.nav -->
+		<!--<div class="search">
+			<form id="searchForm" name="searchForm" action="/home/search-results.dot">
+				<input class="span2" type="text" name="q" placeholder="Site Search" onblur="if(this.value=='')this.value='Site Search';" onfocus="if(this.value=='Site Search')this.value='';">
+			</form>
+		</div>-->
+	</div> <!-- /.nav-collapse -->
+</div> <!-- / .container -->
+</div> <!-- / .navbar-inner -->
+</div> <!-- / .navbar -->
+</header>
+	

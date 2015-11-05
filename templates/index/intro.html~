@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "index/index.html" %}
+{% block content %} 
+<div class="top-spacer">&nbsp;</div>
+
+<div class="page-wrapper">
+      
+<div class="container">
+<div class="span12">
+
+	{% if user != NULL %}
+					
+		<div class="row-fluid page-header">
+  			<div class="span6"><h2>Welcome {{user.last_name}}! </h2></div>				
+  		</div>
+	{% else %}	
+		<div class="row-fluid page-header">
+  			<div class="span6"><h2>Introduction</h2></div>				
+  		</div>
+	{% endif %}
+<!-- Dotcms 페이지 디자인을 활용 -->
+
+<p class="lead">
+Hello! This is cbajs' blog. Welcome Everyone!
+</p>             	
+	       
+<div class="box-container">
+  <a href="{% url 'users:join' %}" class="box0 home-box">
+    <span class="sprite-img responsive"></span>
+    <h3>Sign up</h3>
+    <p>Please join us and share your information.</p>
+  </a>
+  <a href="{% url 'users:login' %}" class="box1 home-box">
+    <span class="sprite-img multi-tenant"></span>
+    <h3>Sign in</h3>
+    <p>Use many features of this blog.</p>
+  </a>
+  <a href="{% url 'users:edit' %}"class="box2 home-box">
+    <span class="sprite-img scalable"></span>
+    <h3>Edit your info</h3>
+    <p>If you write wrong info, change it.</p>
+  </a>
+  <a href="{% url 'users:logout' %}" class="box3 home-box">
+    <span class="sprite-img push-publishing"></span>
+    <h3>Sign out</h3>
+    <p>If you want to sign out, You can just click the button</p>
+  </a>
+  <a href="{% url 'board:lists' %}" class="box4 home-box">
+    <span class="sprite-img apis-cmis"></span>
+    <h3>Board</h3>
+    <p>Leave your opinion.<br>Talk with other people.</p>
+  </a>
+  <a href="#anchor5" class="box5 home-box">
+    <span class="sprite-img workflows"></span>
+    <h3>Workflows</h3>
+    <p>Create simple to advanced workflows with<br>Dotcms' simple visual workflow builder</p>
+  </a>
+</div>
+
+<!--<div class="btn-center">
+  <a href="/download" class="btn btn-warning btn-large">Download</a>
+  <a href="/demo" class="btn btn-inverse btn-large">Online Demo</a>
+</div>-->      
+               
+                     		<div class="visible-desktop">
+   <div class="subnav subnav-homepage">
+      <div class="container" id="toc"></div>
+   </div>
+</div>
+</div>
+</div>
+{% endblock content %}

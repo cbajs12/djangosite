@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "index/index.html" %}
+{% block content %} 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div class="top-spacer">&nbsp;</div>
+
+<div class="page-wrapper">
+      
+<div class="container">
+<div class="span12">
+
+<div class="row-fluid page-header">
+  <div class="span6"><h3>This page is for change your information.</h3></div>
+</div>
+
+<script type="text/javascript">
+function submitCheck(myform){
+	var first = myform.first_name;
+	var last = myform.last_name;
+	var pwd = myform.password
+	
+	if(first.value == ""){
+		alert("input Firstname");		
+		first.focus();
+		return false;
+	}
+	if(last.value == ""){
+		alert("input Lastname");		
+		last.focus();
+		return false;
+	}
+	if(pwd.value == ""){
+		alert("input Password");		
+		pwd.focus();
+		return false;
+	}
+	
+		return true;
+}
+</script>
+
+<div class="submitContent">
+	<form action="{% url 'users:edit' %}" method="post" id="submitContentForm" name="submitContentForm" onsubmit="return submitCheck(this);"> <!-- enctype="multipart/form-data" -->
+	{% csrf_token %}
+	 <div id="Start" class="contentTab first">
+	   <div id="StartProperties">
+	    <dl class="formFieldSet">
+			<script type="text/javascript">
+		    </script> 
+	
+			<div class="group">
+				    <dt id="firstNameFieldLabel" class="formFieldLabel">
+	    				    				<label for="firstNameFieldLabel">
+	    					    				First Name</label>
+	    			</dt>
+	    			
+					<dd id="firstNameFieldInput" class="formFieldInput">
+	
+							<input type="text" class="form-control" name="first_name" maxlength="10" placeholder="Enter your first name" autocomplete="off" value="{{user.first_name}}">
+							
+	            	</dd>
+	    	</div><!-- end .group -->
+
+								        
+	        	
+			<div class="group">
+				    <dt id="lastNameFieldLabel" class="formFieldLabel">
+	    				    				<label for="lastNameFieldLabel">
+	    					    			Last Name</label>
+	    			</dt>
+	    			
+					<dd id="lastNameFieldInput" class="formFieldInput">
+	 
+							<input type="text" class="form-control" name="last_name" maxlength="10" placeholder="Enter your last name" autocomplete="off" value="{{user.last_name}}">
+	            		
+	        		</dd>
+	    	</div><!-- end .group -->
+
+ 			<div class="group">
+				    <dt id="emailFieldLabel" class="formFieldLabel">
+	    				    				<label for="emailFieldLabel">
+	    					    					<a href="#" id="tip-email"><span class="hintIcon"></span></a>
+							<span dojotype="dijit.Tooltip" connectid="tip-email" position="above" style="width: 100px;" class="dijitTooltipData" id="dijit_Tooltip_0" lang="en" widgetid="dijit_Tooltip_0">
+							</span>
+							Email</label>
+							
+	    			</dt>
+	    			
+					<dd id="emailFieldInput" class="formFieldInput">
+	            		            	    	            	    	            	    	            	    	           
+	            		<p>{{user.email }}</p>
+	            	</dd>
+	    	</div><!-- end .group -->	 							        
+	        	
+			<div class="group">
+				    <dt id="phoneFieldLabel" class="formFieldLabel">
+	    				    				<label for="phoneFieldLabel">
+	    					    				Password</label>
+	    			</dt>
+	    			
+					<dd id="phoneFieldInput" class="formFieldInput">
+	            		            	    	            	    	            	    	            	    	                      			
+							<input type="password" class="form-control" name="password" maxlength="15" placeholder="Enter password">
+							
+	            		
+	            	</dd>
+	    	</div><!-- end .group -->
+
+			<div class="group">
+				    <dt id="countryFieldLabel" class="formFieldLabel">
+	    				    				<label for="countryFieldLabel">
+	    					    				Country</label>
+	    			</dt>
+	    			
+					<dd id="countryFieldInput" class="formFieldInput">
+	        			
+	            		<input type="text" class="form-control" name="country" placeholder="Your country" autocomplete="off" value="{{user.country}}">
+	            		
+	            	</dd>
+	    	</div><!-- end .group -->
+	    		        		        	
+			<div class="group">
+				    <dt id="commentsFieldLabel" class="formFieldLabel">
+	    				    				<label for="commentsFieldLabel">
+	    					    				 Comments</label>
+	    				    			</dt>
+	    			
+					<dd id="commentsFieldInput" class="formFieldInput">
+	            		            			            	    	            	    	            	    	     			
+							<textarea class="form-control" rows="3" name="comment">{{user.comment}}</textarea>
+	            			            		
+	            	</dd>
+	    	</div><!-- end .group -->
+
+		</dl>
+	  </div>
+
+	</div>
+
+
+	<div id="tabButton0">
+	<button type="submit" class="btn btn-primary" value="submit">Submit</button>
+	</div>
+	<div id="submitButton" class="submitButton">
+		<br>
+		</div>
+  </form>
+	<div style="clear:both"></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "index/index.html" %}
+{% block content %} 
+{% load staticfiles %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<div class="top-spacer">&nbsp;</div>
+	
+<div class="page-wrapper">
+	<div class="container">
+  	
+	        	        	        	        	
+	<div class="row">
+		            		                		                		
+		                    		                    		                    		
+	<div class="span8">
+		                        		                           		      		       
+<script type="text/javascript">
+			function getDate(){
+				var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth()+1; //January is 0!
+				var yyyy = today.getFullYear();
+				if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = yyyy+"-"+mm+"-"+dd;
+				
+				return today;	
+			};
+			document.getElementById('lastlogin').value = getDate();// this line should come out of the function otherwise it doesn't work
+			
+			var xhr = null;
+			function getXMLHttpRequest() {
+    			if (window.ActiveXObject) {
+        			try {
+            			return new ActiveXObject("Msxml2.XMLHTTP");//IE 상위 버젼
+        			} catch (e1) {
+            			try {
+            			    return new ActiveXObject("Microsoft.XMLHTTP");//IE 하위 버젼
+            			} catch (e2) {
+            			    return null;
+            			}
+        			}
+    			} else if (window.XMLHttpRequest) {
+        			return new XMLHttpRequest();//IE 이외의 브라우저(FireFox 등)
+    			} else {
+        			return null;
+    			}
+			}// XMLHttpRequest 객체 얻기
+			
+			function requestHello(URL) {
+				if(!(submitContentForm.email.value)){
+   					return false;
+   				}
+				if(!validateEmail(submitContentForm.email.value)){
+					alert("Please write down available form of email");
+					return false;
+				}
+   				param = submitContentForm.email.value;
+   				//alert(param);
+    				URL = URL + "?email=" + encodeURIComponent(param);//한글 처리 For get parameter & Important '?email='
+    				xhr = getXMLHttpRequest();//XMLHttpRequest 객체 얻기
+    				xhr.onreadystatechange = responseHello;//콜백 함수  등록
+    				xhr.open("GET", URL, true);//연결
+    				// xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');//For post parameter
+    				xhr.send(null);//전송
+			}// 서버에 요청
+
+			var check = 0;
+
+			function responseHello() {
+   			if (xhr.readyState == 4) {//완료
+	     		   if (xhr.status == 200) {//오류없이 OK
+	        		var str = xhr.responseText;//서버에서 보낸 내용 받기
+				if(str == "1000"){
+					check = 1;
+					alert("This email can use this site");
+				}else{
+					check = 2;
+					alert("This email can't use this site");
+				}
+            			//document.getElementById("message").innerHTML = str;//보여주기    
+        		   }
+			   else 
+			   {
+            				alert("Fail : " + xhr.status);
+        		   }
+    			}
+			}// 응답
+			
+			function validateEmail(email) { 
+			    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			    return re.test(email);
+			}
+			
+			function submitCheck(myform){
+				if(check == 1){
+					return true;
+				}else{
+					check = 0;
+					var emails = myform.email;
+					emails.value="";
+					emails.focus();
+					alert("You must use a validated Email");
+					return false;
+				}
+			}
+				
+</script>
+     
+   <h1>Sign Up Page</h1>
+
+<div class="submitContent">
+	<form action="{% url 'users:join' %}" method="post" id="submitContentForm" name="submitContentForm" onsubmit="return submitCheck(this);">
+	{% csrf_token %}
+	<input type="hidden" name="last_login" id="lastlogin" value=""/>
+	 <div id="Start" class="contentTab first">
+	   <div id="StartProperties">
+	    <dl class="formFieldSet">
+			
+		    
+
+			<div class="group">
+				    <dt id="firstNameFieldLabel" class="formFieldLabel">
+	    				    				<label for="firstNameFieldLabel">
+	    					    				<img src="{% static 'index/img/required.gif' %}">First Name</label>
+	    			</dt>
+	    			
+					<dd id="firstNameFieldInput" class="formFieldInput">
+	            		            	    	            	    	            	    	            	    	            	    	            			
+							<input type="text" class="form-control" name="first_name" maxlength="30" required="required" placeholder="Enter your first name" autocomplete="off">
+						
+	            					<p id="message2" class="form-control"></p>
+	            			</dd>
+						{{form.first_name.errors}}
+	    	</div><!-- end .group -->
+
+								        
+	        	
+			<div class="group">
+				    <dt id="lastNameFieldLabel" class="formFieldLabel">
+	    				    				<label for="lastNameFieldLabel">
+	    					    				<img src="{% static 'index/img/required.gif' %}">Last Name</label>
+	    			</dt>
+	    			
+					<dd id="lastNameFieldInput" class="formFieldInput">
+	            		            	    	            	    	            	    	            	    	            	    	            			
+
+							<input type="text" class="form-control" name="last_name" maxlength="30" required="required" placeholder="Enter your last name" autocomplete="off">
+					
+	            				<p id="message1" class="form-control"></p>
+	        			</dd>
+						{{form.last_name.errors}}
+	    	</div><!-- end .group -->
+
+			<div class="group">
+				    <dt id="emailFieldLabel" class="formFieldLabel">
+	    				    				<label for="emailFieldLabel">
+	    					    					<!-- <a href="#" id="tip-email"> --><span class="hintIcon"></span>
+				
+							<img src="{% static 'index/img/required.gif' %}">Email</label>
+	    			</dt>
+	    			
+					<dd id="emailFieldInput" class="formFieldInput">
+	            		            	    	            	    	            	    	            	    	            	    	            		
+						        			
+						<input type="email" class="form-control" name="email" id="email" required="required" placeholder="Enter email" autocomplete="off" maxlength="75">
+						<input type="button" class="btn btn-primary" id="check_email" value="check-email" onclick="requestHello('/users/check')">
+							
+	            				<p id="message" class="form-control"></p>
+	            			</dd>
+							{{form.email.errors}}  
+	    	</div><!-- end -->        	
+			<div class="group">
+				    <dt id="phoneFieldLabel" class="formFieldLabel">
+	    				    				<label for="phoneFieldLabel">
+	    					    				<img src="{% static 'index/img/required.gif' %}">Password</label>
+	    			</dt>
+	    			
+					<dd id="phoneFieldInput" class="formFieldInput">
+	            		            	    	            	    	            	    	            	    	            	    	              				
+							<input type="password" class="form-control" name="password" maxlength="15" required="required" placeholder="Enter password">
+							
+							<p id="message3" class="form-control"></p>
+	            			</dd>
+							{{form.password.errors}}
+	    	</div><!-- end .group -->
+
+			<div class="group">
+				    <dt id="countryFieldLabel" class="formFieldLabel">
+	    				    				<label for="countryFieldLabel">
+	    					    				Country</label>
+	    			</dt>
+	    			
+					<dd id="countryFieldInput" class="formFieldInput">
+        			
+	            		<select class="form-control" name="country">
+ 							<option>     </option>
+ 							<option>China</option>
+  							<option>Japan</option>
+ 							<option>Korea</option>
+  							<option>United Kingdom</option>
+  							<option>United states of America</option>
+						</select>
+	            		
+				<p id="message4" class="form-control"></p>
+	            	</dd>
+	    	</div><!-- end .group -->
+	    		        				        
+	        	
+			<div class="group">
+				    <dt id="commentsFieldLabel" class="formFieldLabel">
+	    				    				<label for="commentsFieldLabel">
+	    					    				 Comments</label>
+	    				    			</dt>
+	    			
+					<dd id="commentsFieldInput" class="formFieldInput">
+	            		            			            	    	            	    	            	    	            			            	
+         			
+							<textarea class="form-control" rows="3" name="comment"></textarea>
+							 		
+	            	</dd>
+							{{form.comment.errors}}
+	    	</div><!-- end .group -->
+
+		</dl>
+	  </div>
+
+	</div>
+
+
+	<div id="tabButton0"></div>
+	<div id="submitButton" class="submitButton">
+
+		<br>
+	<dt>
+		<dd>
+	 	 <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+		 <!--input type="submit" class="btn btn-primary" value="submit" onclick="requestHello('/users/check')">-->
+	 	</dd>
+	</dt>
+	</div>
+  </form>
+	<div style="clear:both"></div>
+</div>
+
+
+  
+</div><!--/span-->
+		                		
+		                    		                    		                    		
+ <div class="span4">
+		                        		                           		      	
+		   
+			         				         		
+   <!--		       
+ <div class="well address-wrapper">
+  <address>
+    <strong>Sales:</strong>
+    <div class="tel">+1-305-900-2001 ext: 7003</div>
+    <div class="email">sales@dotcms.com</div>
+  </address>
+  
+  <address>
+    <strong>Support:</strong>
+    <div class="email">support@dotcms.com</div>
+    <a class="url" href="http://www.dotcms.org/enterprise/login.dot" target="_blank">Support Portal (Login)</a>
+  </address>
+  
+  <address>
+    <strong>Billing:</strong>
+    <div class="tel">+1-305-900-2001 ext: 7008</div>
+    <div class="email">accounting@dotcms.com</div>
+  </address>
+  
+  <hr>
+  
+  <h3>Locations</h3>
+  <address class="adr">
+    <a href="https://mapsengine.google.com/map/viewer?mid=zZV7CxEwKC7U.khr8JU21t39g" target="_blank">Miami, Florida <i class="icon-map-marker"></i></a><br>
+    <div class="street-address">3250 Mary Street, Suite 405</div>
+    <span class="locality">Miami</span>,
+    <abbr class="region" title="Florida">FL</abbr>,
+    <span class="postal-code">33133</span>
+    <div class="country-name">U.S.A</div>
+  </address>
+
+  <address class="adr">
+    <a href="https://maps.google.com/maps/ms?msid=202790303089467408895.0004a6ba6eeaf43d2a1d0&amp;msa=0&amp;ll=9.982534,-84.153589&amp;spn=0.009795,0.01561" target="_blank">Heredia, Costa Rica <i class="icon-map-marker"></i></a><br>
+    <div class="street-address">
+      Eurocenter Diursa<br>
+      Primera Etapa, Piso 2, Oficina DotCMS
+    </div>
+    <span class="locality">Barreal de Heredia</span>,
+    <abbr class="region">frente a CENADA</abbr>,
+    <div class="country-name">Costa Rica</div>
+  </address>
+
+
+  <address class="adr">
+    <a href="https://maps.google.com/maps?q=Marconilaan+16+5621+AA,+Eindhoven,+The+Netherlands&amp;ll=51.45164,5.467061&amp;spn=0.006245,0.017649&amp;oe=utf-8&amp;client=firefox-a&amp;hnear=Marconilaan+16,+5621+AA+Woensel-Zuid,+Eindhoven,+Noord-Brabant,+The+Netherlands&amp;gl=us&amp;t=m&amp;z=17" target="_blank">Eindhoven, Netherlands <i class="icon-map-marker"></i></a><br>
+    <div class="street-address">Marconilaan 14 (Obelisk office building)</div>
+    <span class="locality">5621 AA</span>,
+    <abbr class="region">Eindhoven</abbr>,
+    <div class="country-name">The Netherlands</div>
+  </address>
+
+    
+   </div>-->
+   
+</div><!--/span-->
+</div><!--/row-->
+	            	        	
+	        	        	        	        	
+</div><!-- /container-->
+	
+
+<a class="backtop" href="#top" style="display: none;">Back to the top</a>
+
+
+	
+</div>
+{% endblock content %}

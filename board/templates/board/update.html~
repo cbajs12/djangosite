@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "index/index.html" %}
+{% block content %}
+<script>
+	$(document).ready(function(){
+		$("#write_btn").click(function(){
+			if($("#input01").val() == ''){
+				alert('Input the title');
+				$("#input01").focus();
+				return false;
+			}else if($("#input02").val() == ''){
+				alert('Input the content');
+				$("#input02").focus();
+				return false;
+			}else{
+				$("#write_action").submit();
+			}
+		});
+	});
+</script>
+
+<div class="top-spacer">&nbsp;</div>
+
+<div class="page-wrapper">
+
+<div class="container">
+<div class="span12">
+
+<div class="row-fluid page-header">
+  <div class="span6"><h2>The list of users</h2></div>
+</div>   
+	<form class="form-horizontal" method="post" action="{% url 'board:update' bd.board_id %}" id="write_action">
+	{% csrf_token %}
+		<fieldset>
+			<legend>Edit content</legend>
+			<div class="control-group">
+				<label class="control-label" for="input01">Title</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" id="input01" name="subject" value="{{bd.subject }}">
+					<p class="help-block">Please write title</p>
+				</div>
+				<label class="control-label" for="input02">Contents</label>
+				<div class="controls">
+					<textarea class="input=xlarge" id="input02" name="contents" rows="5">{{bd.contents }}</textarea>
+					<p class="help-block">Please Write contents</p>
+				</div>
+					
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary" id="write_btn">Confirm</button>
+					<button class="btn" onclick='location.href="board/view.do"'>Cancel</button>
+				</div>
+		</fieldset>
+	</form>
+</div>
+</div>
+{% endblock content %}

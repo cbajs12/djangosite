@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "index/index.html" %}
+{% block content %}
+<div class="top-spacer">&nbsp;</div>
+
+<div class="page-wrapper">
+      
+<div class="container">
+<div class="span12">
+
+<div class="row-fluid page-header">
+  <div class="span6"><h2>User sign in</h2></div>
+</div>                     		      	
+		   
+			         				         		
+   		       
+<p class="lead">
+Welcome! <br/>
+Sign in with your Blog Account
+</p>             	
+
+<div class="row-fluid page-header"> 
+  <form action="{% url 'users:login' %}" id="signin" method="post">
+  {% csrf_token %}
+  <div class="span6">  	  
+      <div class="input-append pull-right" style="margin-top:20px;">
+     	<input type="email" name="email" id="email" required="required" placeholder="email" autocomplete="off"><br>    
+      	<input type="password" name="password" id="password" required="required" placeholder="password" autocomplete="off"><br>
+	{{form.password}}
+	{{form.email.error}}
+	{{form.password.error}}
+      	<button type="submit" class="btn btn-primary btn-lg active">Sign in</button><br>
+      	
+				
+				{% if fail != NULL %}
+      				<div class="alert-box error"><span>error: </span>The email or password you entered is incorrect.</div>
+  					<!--<%
+  						HttpSession s = request.getSession();
+  			    		s.invalidate();
+  					%>-->
+  				{% endif %}
+      </div>
+      
+  </div>
+  </form>
+</div><!-- row-fluid page-header -->
+     
+               
+<div class="visible-desktop">
+   <div class="subnav subnav-homepage">
+      <div class="container" id="toc"></div>
+   </div>
+</div>
+
+<style>
+.alert-box {
+    color:#555;
+    border-radius:10px;
+    font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px;
+    padding:10px 10px 10px 10px;
+   
+}
+.alert-box span {
+    font-weight:bold;
+    text-transform:uppercase;
+}
+.error {
+    background:#ffecec no-repeat 10px 50%;
+    border:1px solid #f5aca6;
+}
+
+</style>
+</div>
+</div>
+{% endblock content %} 

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "index/index.html" %}
+{% block content %} 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+<div class="top-spacer">&nbsp;</div>
+
+<div class="page-wrapper">
+      
+<div class="container">
+<div class="span12">
+
+<div class="row-fluid page-header">
+  <div class="span6"><h2>This page is for delete your account.</h2></div>
+</div>
+<div class="submitContent">
+	<form action="{% url 'users:delete' %}" method="post" id="submitContentForm" name="submitContentForm"> <!-- enctype="multipart/form-data" -->
+	{% csrf_token %}
+	 <div id="Start" class="contentTab first">
+	   <div id="StartProperties">
+	    <dl class="formFieldSet">
+		<div class="group">
+			<dt id="firstNameFieldLabel" class="formFieldLabel">
+	    			<label for="firstNameFieldLabel">Are you sure?</label>
+	    		</dt>
+	            		<div class="radio">
+				  <label>
+				    <input type="radio" name="decide" id="optionsRadios1" value="yes" checked>
+				    I don't want to use this account.
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="decide" id="optionsRadios2" value="no">
+				    I should think this again.
+				  </label>
+				</div>
+	            	
+	    	</div><!-- end .group -->
+
+		</dl>
+	  </div>
+
+	</div>
+
+
+	<div id="tabButton0"></div>
+	<div id="submitButton" class="submitButton">
+
+		<br>
+	<dt>
+		<dd>
+	 	 <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+	 	</dd>
+	</dt>
+	</div>
+  </form>
+	<div style="clear:both"></div>
+</div>
+</div>
+</div>
+</body>
+</html>
+{% endblock content %}

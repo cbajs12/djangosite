@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "index/index.html" %}
+{% block content %}
+<script>
+	$(document).ready(function(){
+		$("#search_btn").click(function(){
+			if($("#q").val() == ''){
+				alert('input searchword');
+				return false;
+			} else{
+				var act = '/phpsite/index.php/board/lists/site_board/q/'+$("#q").val()+'/page/1';
+				$("#bd_search").attr('action',act).submit();
+			}
+		});
+	});
+		
+	function board_search_enter(form){
+		var keycode = window.event.keyCode;
+		if(keycode == 13) $("#search_btn").click();
+	}
+</script>
+<div class="top-spacer">&nbsp;</div>
+
+<div class="page-wrapper">
+      
+<div class="container">
+<div class="span12">
+
+<div class="row-fluid page-header">
+  <div class="span6"><h3>Board</h3></div>
+</div>
+
+	<table id="box-table-a" class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Number</th>
+				<th scope="col">Title</th>
+				<th scope="col">Writer</th>
+				<th scope="col">Hits</th>
+				<th scope="col">Register Date</th>
+			</tr>
+		</thead>
+		<tbody>
+	
+	{% for pag in paging %}
+		<tr>
+			<th scope="row">{{pag.board_id }}</th>
+			<td><a href="{% url 'board:view' pag.board_id %}">{{pag.subject }}</a></td>
+			<td>{{pag.user_name }}</td>
+			<td>{{pag.hits }}</td>
+			<td>{{pag.reg_date }}</td>
+		</tr>
+	{% endfor %}	
+		</tbody>
+						{% if paging.has_previous %}
+          					  <a href="?page={{ paging.previous_page_number }}">previous</a>
+       						{% endif %}
+						  Page {{ paging.number }} of {{ paging.paginator.num_pages }}
+  						{% if paging.has_next %}
+            					  <a href="?page={{ paging.next_page_number }}">next</a>
+       						{% endif %}
+	</table>
+	
+		
+			<div><p><a href="{% url 'board:write' %}" class="btn btn-success">Write</a></p></div>
+		
+		
+			
+	
+<!-- 	<div>
+		<?php
+			echo form_open('phpsite/index.php/board/lists/site_board', array('id'=>'bd_search', 'class'=>'well form-search'));
+		?>
+		<!--<form id="bd_search" method="post" class="well form-search">-->
+<!-- 			 <input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query"/><input type="button" value="search" id="search_btn" class="btn btn-primary"/>
+		</form>
+	</div> -->
+</div>
+</div>
+{% endblock content %}
